@@ -3,9 +3,7 @@
 ## 安装
 
 ```
-mkdir -p $GOPATH/src/github.com/yurishkuro/
-cd $GOPATH/src/github.com/yurishkuro/
-git clone https://github.com/yurishkuro/opentracing-tutorial.git opentracing-tutorial
+go get -u github.com/greyireland/jaeger-demo
 ```
 
 
