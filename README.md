@@ -25,4 +25,4 @@ go get -u github.com/greyireland/jaeger-demo
   * 多个服务之间 携带数据传递
 * [Extra Credit](./extracredit)
   * Use existing open source instrumentation
-  * 使用go-stdlib库可以进行各种详细跟踪【使用标准库httptrace进行http详细跟踪】
+  * 使用go-stdlib库可以对http做更详细跟踪【使用标准库httptrace实现】
