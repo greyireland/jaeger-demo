@@ -8,7 +8,7 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	otlog "github.com/opentracing/opentracing-go/log"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/tracing"
+	"github.com/greyireland/jaeger-demo/lib/tracing"
 )
 
 func main() {
@@ -34,5 +34,5 @@ func main() {
 		w.Write([]byte(helloStr))
 	})
 
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:8081", nil))
 }

@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	opentracing "github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/tracing"
+	"github.com/greyireland/jaeger-demo/lib/tracing"
 )
 
 func main() {
@@ -19,8 +19,9 @@ func main() {
 		defer span.Finish()
 
 		helloStr := r.FormValue("helloStr")
+		w.Write([]byte("hello"))
 		println(helloStr)
 	})
 
-	log.Fatal(http.ListenAndServe(":8082", nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:8082", nil))
 }

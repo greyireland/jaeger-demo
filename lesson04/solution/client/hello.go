@@ -4,26 +4,35 @@ import (
 	"context"
 	"net/http"
 	"net/url"
-	"os"
-
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/log"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/http"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/tracing"
+	"github.com/greyireland/jaeger-demo/lib/http"
+	"github.com/greyireland/jaeger-demo/lib/tracing"
+	"flag"
 )
 
+var (
+	ip string
+)
+
+func init() {
+
+}
 func main() {
-	if len(os.Args) != 3 {
-		panic("ERROR: Expecting two arguments")
-	}
+	ipp := flag.String("ip", "localhost", "")
+	flag.Parse()
+	ip = *ipp
+	//if len(os.Args) != 3 {
+	//	panic("ERROR: Expecting two arguments")
+	//}
 
 	tracer, closer := tracing.Init("hello-world")
 	defer closer.Close()
 	opentracing.SetGlobalTracer(tracer)
 
-	helloTo := os.Args[1]
-	greeting := os.Args[2]
+	helloTo := "hello"
+	greeting := "world"
 
 	span := tracer.StartSpan("say-hello")
 	span.SetTag("hello-to", helloTo)
@@ -42,7 +51,7 @@ func formatString(ctx context.Context, helloTo string) string {
 
 	v := url.Values{}
 	v.Set("helloTo", helloTo)
-	url := "http://localhost:8081/format?" + v.Encode()
+	url := "http://" + ip + ":8081/format?" + v.Encode()
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err.Error())
@@ -78,7 +87,7 @@ func printHello(ctx context.Context, helloStr string) {
 
 	v := url.Values{}
 	v.Set("helloStr", helloStr)
-	url := "http://localhost:8082/publish?" + v.Encode()
+	url := "http://" + ip + ":8082/publish?" + v.Encode()
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err.Error())
